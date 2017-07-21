@@ -1,6 +1,38 @@
 # rails-good-to-know
 Good-to-know when starting with Rails
 
+# Fetch
+
+`fetch` returns a value from a hash for a given key. 
+The big advantage of `fetch` is that if the key can't be found, it won't return nil, but it will raise an KeyError exception. 
+
+```
+h = { "a" => "awesome", "b" => "beautiful" }
+```
+
+```
+h["a"]
+=> "awesome"
+
+h["z"]
+=> nil
+```
+
+```
+h.fetch("a")
+=> "awesome"
+
+h.fetch("z")
+KeyError: key not found: "z"
+```
+
+It is helpful cause it specifies the error. You can also pass a default, so that will be returned when the key can't be found. 
+
+```
+h.fetch("z", "zyaouh!")
+=> "zyaouh!"
+```
+
 # Difference between %W and %w
 `%w` and `%W` are shortcuts to write array of strings separated by space, no need to bother with commas nor quotes
 
