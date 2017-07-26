@@ -26,11 +26,47 @@ h.fetch("z")
 KeyError: key not found: "z"
 ```
 
-It is helpful cause it specifies the error. You can also pass a default, so that will be returned when the key can't be found. 
+It is helpful cause it specifies the error. We can also pass a default, that will be returned when the key can't be found.
 
 ```
 h.fetch("z", "zyaouh!")
 => "zyaouh!"
+```
+
+We can also precise the error raising in a block. Look first how it looks without a block:
+
+```
+> def my_method(options:); end
+=> :my_method
+
+> my_method()
+ArgumentError: missing keyword: options
+in `my_method'
+
+my_method(options: {})
+=> nil
+```
+
+We define a method with mandatory options. If there is no param_1, we want to `raise 'Missing param_1' `
+
+```
+> def my_method(options:)
+	options.fetch(:param_1) { raise 'Missing param_1' }
+end
+=> :my_method
+```
+Then when we call the method without `param_1`, we have:
+
+```
+> my_method(options: {})
+RuntimeError: Missing param_1
+in `block in my_method'
+```
+Then when we call the method with `param_1`, we have:
+
+```
+> my_method(options: {param_1: '2'})
+=> "2"
 ```
 
 # Difference between %W and %w
