@@ -5,13 +5,15 @@ Good-to-know when starting with Rails
 
 Proc objects are blocks of code that have been bound to a set of local variables. We can call the block of a Proc object with `call`
 
-First thing first. A `Proc` needs a block to be created. If we try without a blog :
+First thing first. A `proc`, an instance of Proc, needs a block to be created. If we try without a block :
 
 ```
 > Proc.new
 ArgumentError: tried to create Proc object without a block
 in `new'
 ```
+
+Good-to-know: `Proc.new` = `proc`
 
 Let's create a proc!
 
@@ -27,7 +29,6 @@ Now, let's have a look at the doc example.
 def gen_times(factor)
   return Proc.new {|n| n*factor }
 end
-
 ```
 
 What happens if we call `gen_times(3)` ?
