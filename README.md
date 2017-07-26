@@ -1,6 +1,53 @@
 # rails-good-to-know
 Good-to-know when starting with Rails
 
+# Proc & call
+
+Proc objects are blocks of code that have been bound to a set of local variables. We can call the block of a Proc object with `call`
+
+First thing first. A `Proc` needs a block to be created. If we try without a blog :
+
+```
+> Proc.new
+ArgumentError: tried to create Proc object without a block
+in `new'
+```
+
+Let's create a proc!
+
+```
+Proc.new {|n| n*factor }
+=> #<Proc:0x007fe6a64238c8@(pry):36>
+```
+We get a proc (an instance of Proc) ! :)
+
+Now, let's have a look at the doc example.
+
+```
+def gen_times(factor)
+  return Proc.new {|n| n*factor }
+end
+
+```
+
+What happens if we call `gen_times(3)` ?
+
+Think...
+
+```
+=> #<Proc:0x007fe6a62e0308@(pry):38>
+```
+
+We create a proc ! an instance of Proc ! To get the result of `n*factor`, we have to pass a parameter to the Proc block.
+
+So to do this, we need to `call` the block !
+
+```
+gen_times(3).call(3)
+=> 9
+```
+Yeah!
+
 # Fetch
 
 `fetch` returns a value from a hash for a given key. 
