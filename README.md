@@ -49,6 +49,89 @@ gen_times(3).call(3)
 ```
 Yeah!
 
+# Struct
+
+When we want to create a Class, we usually do this:
+
+```
+class Coordinates
+	attr_accessor :x, :y
+	
+	def initialize(x, y)
+		@x = x
+		@y = y
+	end
+end
+```
+With an example:
+
+```
+Coordinate.new(2,2)
+=> #<Coordinate:0x007f853f877c58 @x=2, @y=2>
+```
+
+Using `Struct` can be very helpful to do the same thing: using accessor methods, without having to write an explicit class.
+
+`Struct.new` creates a Class, that we assign to a Constant.
+
+```
+Coordinates = Struct.new(:x, :y)
+=> Coordinates
+```
+And `Coordinates` is effectively a class
+
+```
+Coordinates.class
+=> Class
+```
+So now we can create instance of Coordinates
+
+```
+Coordinates.new(2,2)
+=> #<struct Coordinates x=2, y=2>
+```
+
+Then we can do so stuff, like changing the value of the variable
+
+```
+> coordinates = Coordinates.new(2,2)
+=> #<struct Coordinates x=2, y=2>
+
+> coordinates.x = 1
+=> 1
+
+> coordinates
+=> #<struct Coordinates x=1, y=2>
+```
+
+or call a method on it
+
+```
+Coordinates = Struct.new(:x, :y) do
+  def sum
+    x + y
+  end
+end
+
+Coordinates.new(2, 2).sum  # => 4
+```
+
+Good to know, we can call any member using symbol, string, index, like this:
+
+```
+> coordinates
+=> #<struct Coordinates x=1, y=2>
+
+> coordinates[:x]
+=> 1
+> coordinates["x"]
+=> 1
+> coordinates[0]
+=> 1
+> coordinates.x
+=> 1
+```
+
 # Fetch
 
 `fetch` returns a value from a hash for a given key. 
