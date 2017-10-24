@@ -1,7 +1,7 @@
 # rails-good-to-know
 Good-to-know when starting with Rails
 
-# Resourceful Routing
+# Resourceful Routes
 
 ## CRUD
 
@@ -27,11 +27,11 @@ If you want to create only specific route(s) :
 
 You want a resource that clients always look up without referencing an ID. 
 
-For example, you would like `/photo` to always show the photo of the currently logged in user
+=> For example, you would like `/photo` to always show the photo of the currently logged in user (without the ID)
 
-`resources :photo`
+`resource :photo`
 
-This singular resourceful route generates **3 helpers** : for the NEW, the EDIT and the SHOW
+This singular resourceful route generates **3 helpers** : for the NEW, the EDIT and the `/`, which means **6 routes**
 
 ## Namespace
 
@@ -57,11 +57,11 @@ DELETE	/admin/posts/:id
 
 Variations:
 
-1. If you want to route /posts (without the prefix /admin) to Admin::PostsController:
+1. If you want to route `/posts` (without the prefix `/admin`) to Admin::PostsController:
 
 `resources :posts, :module => "admin"`
 
-2. If you want to route /admin/posts to PostsController (without the Admin:: module prefix)
+2. If you want to route `/admin/posts` to PostsController (without the Admin:: module prefix)
 
 `resources :posts, :path => "/admin/posts"`
 
@@ -97,7 +97,7 @@ resources :photos do
 end
 ```
 
-This will create route passing the ID of photo : `/photos/1/preview`
+This will create route passing the ID of the photo : `/photos/1/preview`
 
 ## Collection
 
@@ -109,8 +109,41 @@ resources :photos do
 end
 ```
 
-This will create route **without** passing the ID of photo : `/photos/preview`
+This will create route **without** passing the ID of the photo : `/photos/preview`
 
+
+# Non-Resourceful Routes
+
+## Dynamic Segment
+
+```
+get 'photos/:id/:user_id', to: 'photos#show'
+```
+for `/photos/1/2`
+
+## Dynamic Segment
+
+```
+get 'photos/:id/with_user/:user_id', to: 'photos#show'
+```
+for `/photos/1/with_user/2`
+
+## HTTP Verb Constraints
+
+To expose your actions to both GET and POST, you specify with `via:`
+
+```
+match ':controller/:action/:id', via: [:get, :post]
+```
+
+If you want to expose your action to only **one verb**, use:
+
+```
+get ':controller/:action/:id'
+
+```
+
+## AS
 
 
 # Proc & call
