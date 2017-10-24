@@ -1,6 +1,118 @@
 # rails-good-to-know
 Good-to-know when starting with Rails
 
+# Resourceful Routing
+
+## CRUD
+
+`resources :photos` 
+
+it creates **7 routes** :
+
+```
+GET		/photos
+GET		/photos/new
+POST	/photos
+GET		/photos/:id
+GET		/photos/:id/edit
+PUT		/photos/:id
+DELETE	/photos/:id
+```
+
+If you want to create only specific route(s) :
+
+`resources :photos, only [index]`
+
+## Singular resources
+
+You want a resource that clients always look up without referencing an ID. 
+
+For example, you would like `/photo` to always show the photo of the currently logged in user
+
+`resources :photo`
+
+This singular resourceful route generates **3 helpers** : for the NEW, the EDIT and the SHOW
+
+## Namespace
+
+You wish to organize groups of controllers under a namespace to have `/admin/posts`, to route to `Admin::PostsController`
+
+```
+namespace :admin do
+  resources :posts, :comments
+end
+```
+
+it creates **7 routes** :
+
+```
+GET		/admin/posts
+GET		/admin/posts/new
+POST	/admin/posts
+GET		/admin/posts/:id
+GET		/admin/posts/:id/edit	
+PUT		/admin/posts/:id
+DELETE	/admin/posts/:id
+```
+
+Variations:
+
+1. If you want to route /posts (without the prefix /admin) to Admin::PostsController:
+
+`resources :posts, :module => "admin"`
+
+2. If you want to route /admin/posts to PostsController (without the Admin:: module prefix)
+
+`resources :posts, :path => "/admin/posts"`
+
+## Nested routes
+
+Nested routes allow you to capture models relationship in your routing :
+
+```
+resources :magazines do
+  resources :ads
+end
+```
+
+it creates **7 routes** :
+
+```
+GET		/magazines/:magazine_id/ads
+GET		/magazines/:magazine_id/ads/new
+POST	/magazines/:magazine_id/ads
+GET		/magazines/:magazine_id/ads/:id	
+GET		/magazines/:magazine_id/ads/:id/edit
+PUT		/magazines/:magazine_id/ads/:id
+DELETE	/magazines/:magazine_id/ads/:id
+```
+
+## Member
+
+```
+resources :photos do
+  member do
+    get 'preview'
+  end
+end
+```
+
+This will create route passing the ID of photo : `/photos/1/preview`
+
+## Collection
+
+```
+resources :photos do
+  collection do
+    get 'preview'
+  end
+end
+```
+
+This will create route **without** passing the ID of photo : `/photos/preview`
+
+
+
 # Proc & call
 
 Proc objects are blocks of code that have been bound to a set of local variables. We can call the block of a Proc object with `call`
