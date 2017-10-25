@@ -21,17 +21,19 @@ DELETE	/photos/:id
 
 If you want to create only specific route(s) :
 
-`resources :photos, only [index]`
+`resources :photos, only: [:index]`
+`resources :photos, only: [:show, :update]`
 
 ## Singular resources
 
 You want a resource that clients always look up without referencing an ID. 
 
-=> For example, you would like `/photo` to always show the photo of the currently logged in user (without the ID)
+For example, you would like `/photo` 
+to always show the photo of the currently logged in user instead of always passing the id like `/photos/:id` 
 
 `resource :photo`
 
-This singular resourceful route generates **3 helpers** : for the NEW, the EDIT and the `/`, which means **6 routes**
+This singular resourceful route generates **3 helpers** : for the NEW, the EDIT and the `/`, which means **6 routes** (all routes except for the index)
 
 ## Namespace
 
@@ -85,6 +87,15 @@ GET		/magazines/:magazine_id/ads/:id
 GET		/magazines/:magazine_id/ads/:id/edit
 PUT		/magazines/:magazine_id/ads/:id
 DELETE	/magazines/:magazine_id/ads/:id
+```
+
+If you don't want to pass the `:magazine_id` on the routes like above, you can do: 
+
+```
+scope path: '/magazines' do
+  resources :ads
+end
+
 ```
 
 ## Member
